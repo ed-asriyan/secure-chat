@@ -1,0 +1,174 @@
+﻿<UserControl x:Class="Chat.MessageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+              xmlns:UserControl="clr-namespace:Chat"
+             Height="auto" Width="auto" MinHeight="18" UseLayoutRounding="True">
+
+    <UserControl.Triggers>
+        <EventTrigger SourceName="MainBorder" RoutedEvent="MouseEnter">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="btnDelete"
+                                     Storyboard.TargetProperty="Width"
+                                     To="20"
+                                     Duration="0:0:0.05"
+                                     DecelerationRatio="0.75"></DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger SourceName="MainBorder" RoutedEvent="MouseLeave">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="btnDelete"
+                                     Storyboard.TargetProperty="Width"
+                                     To="0"
+                                     Duration="0:0:0.2"
+                                     AccelerationRatio="0.5"></DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+
+    <Border Name="MainBorder" MouseRightButtonUp="MainBorder_MouseRightButtonUp"
+            >
+        <Border.Background>
+            <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                <GradientStop Color="Transparent" Offset="0" x:Name="bdgrWhiteLeft"/>
+                <GradientStop Color="#FF8037FF" Offset="0" x:Name="bdgrColorLeft"/>
+                <GradientStop Color="#FF8037FF" Offset="0" x:Name="bdgrColorRight"/>
+                <GradientStop Color="Transparent" Offset="0" x:Name="bdgrWhiteRight"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+
+        <Grid 
+            Name="MainGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0"
+                       Name="ProfilePhoto"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="2"
+                       Height="26" Width="{Binding ElementName=ProfilePhoto, Path=Height}"
+                   
+                       ></Image>
+
+            <Border Name="BubbleBorder"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Margin="5" CornerRadius="5"
+                    Background="#DAE3ED" BorderBrush="Gray" BorderThickness="0.5"
+                    Height="auto" Width="auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <TextBox Grid.Column="1"
+                       Name="Body"
+                       VerticalAlignment="Center"
+                         IsReadOnly="True"
+                       HorizontalAlignment="Left"
+                       Margin="5,0,0,0"
+                       Foreground="Black"
+                       TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}"/>
+
+                        <Grid Grid.Column="2" Name="TimeGrid">
+                            <TextBlock
+                       Name="Time"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Left"
+                       Margin="10,0,5,0"
+                       Foreground="Gray"
+                       TextWrapping="Wrap"
+                       FontWeight="Normal"
+                       FontStyle="Italic"></TextBlock>
+
+                            <UserControl:LoadingIcon x:Name="LoadingIcon"
+                                         Visibility="Collapsed"
+                                         
+                                         Brush="Blue"
+                                         Height="18"
+                    ></UserControl:LoadingIcon>
+
+                            <Button Name="SendingErrorIcon"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Foreground="{x:Null}"
+                        
+                        ToolTip="Нажмите, чтобы отправить ещё раз"
+                        Cursor="Hand"
+                        Visibility="Collapsed"
+                        Height="18" Click="SendingErrorIcon_Click"
+                        >
+                                <UserControl:ErrorIcon></UserControl:ErrorIcon>
+                            </Button>
+                        </Grid>
+
+                        <Button Name="btnSelect"
+                        Grid.Column="3"
+                        VerticalAlignment="Center"
+                        Background="{x:Null}"
+                        Foreground="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Width="0" Click="btnSelect_Click"
+                        ToolTip="Сообщение выделено">
+                            <Viewbox MaxHeight="15">
+                                <Image Name="imgSelect"
+                       Source="Images/Checked.png"
+                        Stretch="UniformToFill"></Image>
+                            </Viewbox>
+                        </Button>
+
+                        <Button Grid.Column="4"
+                    Name="btnDelete"
+                    VerticalAlignment="Top"
+                    Click="DeleteButton_Click"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="{x:Null}"
+                    Width="0"
+                    ToolTip="Удалить">
+                            <Viewbox Stretch="UniformToFill" MaxHeight="15">
+                                <Image Source="Images/Close.png"></Image>
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+                    <StackPanel Name="AttachmentsPanel"
+                       Grid.Row="1">
+
+                    </StackPanel>
+
+                    <TextBlock Name="ErrorDescription"
+                       Visibility="Collapsed"
+                       Foreground="Red"
+                       Grid.Row="2"
+                       TextWrapping="Wrap"
+                       FontSize="9"
+                       Margin="15,0,0,0"
+                       ></TextBlock>
+                </Grid></Border>
+        </Grid>
+    
+    </Border>
+</UserControl>

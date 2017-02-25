@@ -1,0 +1,192 @@
+﻿<UserControl x:Class="Chat.AttachmentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             Height="auto" Width="auto">
+    <Grid Name="MainGrid"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="40,0,7,0"
+                        >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Column="0"
+                    Orientation="Horizontal">
+            <Image Name="PreviewImage"
+                   Visibility="Collapsed"
+                   MaxHeight="350"
+                   Cursor="Hand"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"></Image>
+            
+        </StackPanel>
+        
+        <Grid Name="InfoGrid"
+              Grid.Row="0"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition MinWidth="40"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                                   Grid.Row="0"
+                                   Text="Файл: "
+                                   FontWeight="Bold"/>
+                    <TextBlock  Name="FileName"
+                                    Grid.Column="1"
+                                    Grid.Row="0" MaxWidth="300"
+                                    TextWrapping="Wrap"/>
+
+                    <TextBlock Text="Расширение: "
+                                   Grid.Column="0"
+                                   Grid.Row="1"
+                                   FontWeight="Bold" ></TextBlock>
+
+                    <TextBlock Name="txblExtession"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   TextWrapping="WrapWithOverflow"></TextBlock>
+
+                    <TextBlock Text="Размер: "
+                                   Grid.Column="0"
+                                   Grid.Row="2"
+                                   FontWeight="Bold"></TextBlock>
+
+                    <TextBlock Name="txblFileSize"
+                                   Grid.Column="1"
+                                   Grid.Row="2"></TextBlock>
+
+                </Grid>
+            </Grid>
+
+            <StackPanel  HorizontalAlignment="Left"
+                   Grid.Column="2"
+                   Orientation="Horizontal">
+
+                <Image Name="FileDownload"
+                   MaxHeight="35"
+                   MaxWidth="35"
+                   ToolTip="Скачать"
+                   Cursor="Hand" Source="Images/Download.png">
+                    <Image.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="0.75"
+                                                 Duration="0:0:0.075"
+                                                 ></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="1"
+                                                 Duration="0:0:0.75"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Image.Triggers>
+
+                </Image>
+
+                <Image Name="FileShowInFolder" Source="Images/Folder.png"
+                   MaxHeight="23"
+                       VerticalAlignment="Bottom"
+                   ToolTip="Показать в папке"
+                       Margin="7,0,0,5"
+                   MaxWidth="23"
+                   Cursor="Hand" MouseLeftButtonUp="FileShowInFolder_MouseLeftButtonUp">
+                    <Image.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="0.75"
+                                                 Duration="0:0:0.075"
+                                                 ></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="1"
+                                                 Duration="0:0:0.75"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Image.Triggers>
+                </Image>
+            </StackPanel>
+
+        </Grid>
+        
+        <TextBlock Name="ErrorDescription"
+                   Grid.Row="1"
+                   VerticalAlignment="Center"
+                   TextWrapping="NoWrap"
+                   FontSize="9"
+                   Foreground="Red"
+                   Visibility="Collapsed"></TextBlock>
+        
+        <Grid Grid.Row="1" Width="{Binding ElementName=MainGrid, Path=ActualWidth}" Name="grdDownloadingInfo" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="txblFileDownloadingProgress"
+                       VerticalAlignment="Center"
+                       Foreground="Gray"
+                       FontSize="13"
+                       TextAlignment="Center"
+                       ></TextBlock>
+            
+            <ProgressBar Name="prbrFileDownloadingProcess"
+                             Grid.Column="1"
+                             Margin="5"
+                             Height="15"
+                             Visibility="Visible"
+                             Opacity="1"
+                             ></ProgressBar>
+            
+            <TextBlock Name="txblFileDownloadingPercent"
+                       FontSize="13"
+                       Grid.Column="2"
+                       Foreground="Gray"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       ></TextBlock>
+        </Grid>
+    </Grid>
+</UserControl>

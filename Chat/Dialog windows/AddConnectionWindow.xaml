@@ -1,0 +1,57 @@
+﻿<Window x:Class="Chat.AddConnectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавить новое соединение" Height="212" Width="271" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" >
+    <Canvas>
+        <Label Content="IP:" Canvas.Top="10" Canvas.Left="94"></Label>
+        <Label Content="Порт:" Canvas.Top="32" Canvas.Left="77"></Label>
+        <Label Content="Секретное слово:" Canvas.Top="56" Canvas.Left="13" Height="40"></Label>
+
+        <TextBox Name="ConnectionIP" Canvas.Top="13" Canvas.Left="122" Width="120" TextChanged="ConnectionIP_TextChanged"></TextBox>
+        <TextBox Name="ConnectionPort" Canvas.Top="36" Canvas.Left="122" Width="120"></TextBox>
+        <TextBox Name="ConnectionKey"
+                 Canvas.Top="60" Canvas.Left="122"
+                 Width="120"
+                 IsEnabled="{Binding ElementName=Encryption, Path=IsChecked}"
+                 ></TextBox>
+
+        <CheckBox Name="LongPoll" Content="Подключиться по longpoll" Canvas.Left="10" Canvas.Bottom="12" ToolTip="Соединение в режиме longpoll" Canvas.Top="103"></CheckBox>
+        <TextBlock Name="EncryptionAttention"
+                   Text="!"
+                   Canvas.Left="186" Canvas.Top="80"
+                   FontWeight="Bold"
+                   Foreground="Red"
+                   Cursor="Hand"
+                   FontSize="17" MouseUp="TextBlock_MouseUp"
+                   ></TextBlock>
+        <CheckBox Name="Encryption" IsChecked="True" Content="Использовать шифрование" Canvas.Left="10" Canvas.Top="83" Checked="Encryption_Checked" Unchecked="Encryption_Unchecked"></CheckBox>
+        <CheckBox Name="UseLOngpollOnly" Canvas.Left="10" Canvas.Top="123" Width="177">
+            <TextBlock Text="Отправлять данные только по установленному собеседником longpoll соединению"
+                       TextWrapping="Wrap" FontSize="10" Height="43" Width="152"
+                       ></TextBlock>
+        </CheckBox>
+
+
+        <Button Name="OK"
+                Content="OK"
+                Cursor="Hand"
+                Width="54" Height="37"
+                Click="OK_Click"
+                IsDefault="True"
+                FontWeight="Medium"
+                Canvas.Left="188" Canvas.Top="123"
+                BorderThickness="2"
+                ToolTip="Отменить и закрыть диалоговое окно"
+                Background="{x:Null}"></Button>
+        <Button Name="Cansel"
+                Content="Отмена"
+                Width="46" Height="35"
+                Click="Cansel_Click"
+                IsCancel="True"
+                Canvas.Left="196" Canvas.Top="83"
+                Background="{x:Null}"
+                FontWeight="Medium" FontSize="11"
+                ToolTip="Создать/применть изменения и закрыть диалоговое окно"
+                Cursor="Hand"></Button>
+    </Canvas>
+</Window>

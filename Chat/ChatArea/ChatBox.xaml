@@ -1,0 +1,636 @@
+<UserControl 
+             x:Class="Chat.ChatBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Chat="Chat:Cont"
+             mc:Ignorable="d" 
+             xmlns:UserControl="clr-namespace:Chat"
+             Height="auto" Width="auto">
+
+    <Grid Name="MainGrid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Column="0" BorderBrush="Black" CornerRadius="0,4,0,0">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="{Binding ElementName=MessagesAreaViewer, Path=Background.Color}" Offset="1"/>
+                    <GradientStop Color="#D3FFFFFF"/>
+                    <GradientStop Color="#FFF7F7F7" Offset="0.95"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Canvas Name="Head" Background="Transparent">
+                <UserControl:BeautifullLabel x:Name="ConnectionName"
+                                             FontSize="20"
+                                             Height="34"
+                                             Canvas.Left="56" Width="227"/>
+                <Label Name="ConnectionAdress"
+                       FontSize="15"
+                       Content="IP: "
+                       Canvas.Left="56" Canvas.Top="20"
+                       Width="140"/>
+
+                <Image Name="ConnectionPhoto"
+                       Canvas.Left="0" Canvas.Top="0"
+                       Cursor="Hand"
+                       Height="54" Width="{Binding ElementName=ConnectionPhoto, Path=Height}" MouseLeftButtonUp="ConnectionPhoto_MouseLeftButtonUp"
+                       ></Image>
+
+                <Button Name="btnConnectionParameters"
+                        Canvas.Right="40"
+                        Canvas.Bottom="5"
+                        Cursor="Hand"
+                        Height="23" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Click="btnConnectionParameters_Click"
+                        ToolTip="&#1055;&#1072;&#1088;&#1072;&#1084;&#1077;&#1090;&#1088;&#1099; &#1089;&#1086;&#1077;&#1076;&#1080;&#1085;&#1077;&#1085;&#1080;&#1103;"
+                        >
+                    <Image Source="Images/Tools.png"></Image>
+                </Button>
+
+                <Button Name="AttachmentsListViewer"
+                        Canvas.Right="10"
+                        Canvas.Bottom="5"
+                        Height="23"
+                        Cursor="Hand"
+                        ToolTip="&#1057;&#1087;&#1080;&#1089;&#1086;&#1082; &#1086;&#1090;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1085;&#1099;&#1093; &#1092;&#1072;&#1081;&#1083;&#1086;&#1074;"
+                        Width="{Binding ElementName=AttachmentsListViewer, Path=Height}" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}" Click="AttachmentsListViewer_Click"
+                        >
+                    <Image Source="Images/Files.png"></Image>
+                </Button>
+
+                <UserControl:BeautifullLabel x:Name="ConnectionOffline" FontSize="15" Foreground="#FF7C7C7C" Canvas.Right="205" Canvas.Bottom="0"/>
+
+                <Grid Name="LongpollArea"
+                      Canvas.Right="10"
+                      Canvas.Top="5"
+                      >
+                    <CheckBox Name="chbxLongpoll"
+                          
+                          Checked="chbxLongpoll_Checked" Unchecked="chbxLongpoll_Unchecked"></CheckBox>
+
+                    <TextBlock Name="txblLongPoll"
+                               Foreground="Gray"
+                               ></TextBlock>
+                </Grid>
+
+                <StackPanel Name="stackSelectedMessagesButtons"
+                            Canvas.Right="200"
+                            Canvas.Top="7"
+                            Width="auto"
+                            Height="24"
+                            Orientation="Horizontal"
+                            IsEnabled="False"
+                            Opacity="0"
+                            
+                            >
+
+                    <Button Name="btnUnselectAll"
+                            Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"
+                            Cursor="Hand"
+                            Click="btnUnselectAll_Click">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Row="0"
+                                   Source="Images/Cansel.png"></Image>
+
+                        </Grid>
+
+                    </Button>
+
+                    <Button Name="btnSelectAll"
+                            Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"
+                            Cursor="Hand"
+                            Click="btnSelectAll_Click"
+                            >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0"
+                                   Source="Images/SelectAll.png"></Image>
+                        </Grid>
+                    </Button>
+
+                    <Button Name="btnDeleteSelected"
+                            Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"
+                            Cursor="Hand"
+                            Click="btnDeleteSelected_Click"
+                            >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0"
+                                   Source="Images/Trash.png"></Image>
+                        </Grid>
+                    </Button>
+
+                </StackPanel>
+
+                <Line Canvas.Right="0" Visibility="Collapsed" Canvas.Bottom="0" Stroke="Black" X1="0" X2="100"></Line>
+            </Canvas>
+        </Border>
+
+        <Grid Name="WorkBoard"
+              Grid.Row="1" ClipToBounds="True">
+            <ScrollViewer Name="MessagesAreaViewer" VerticalScrollBarVisibility="Visible" Background="#FFD7E4EC"
+                          Drop="AttachmentButton_Drop"
+                          
+                          AllowDrop="True">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="20"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Name="MessagesArea"
+                                Grid.Row="0"
+                                VerticalAlignment="Bottom"></StackPanel>
+
+                    <StackPanel Name="SendingMessages"
+                                Margin="0,0,0,20"
+                                Grid.Row="1"
+                                ></StackPanel>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Opacity="{Binding ElementName=Typing, Path=Opacity, Mode=OneWay}" Grid.ColumnSpan="2">
+                        <Image Source="Images/PenTyping.png" Margin="25,0,0,0" MaxHeight="15"></Image>
+                        <TextBlock Name="Typing" FontSize="15" Foreground="#FF5F5F5F" Margin="7,0,0,0" Text="... is typing" Opacity="0"></TextBlock>
+                    </StackPanel>
+
+                </Grid>
+            </ScrollViewer>
+
+            <Grid Name="AdditionalBoard"
+              Margin="5,5,22,5"
+              Background="White"
+              Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="#F2F2F2" MouseWheel="ScrollViewer_MouseWheel">
+                        <Grid ClipToBounds="True"
+                              Name="addbdCanvasGrid"
+                              Background="White"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Left"
+                              Width="{Binding ElementName=addbrInkCanvas, Path=ActualWidth}"
+                              Height="{Binding ElementName=addbrInkCanvas, Path=ActualHeight}">
+                            <Image Name="addbrinkCanBackgroundImage"                               
+                               
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Stretch="Uniform"
+                           />
+
+                            <InkCanvas Name="addbrInkCanvas"
+                                           Cursor="Hand"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           SnapsToDevicePixels="True"
+                                           MouseRightButtonUp="addbrInkCanvas_MouseRightButtonUp"
+                                           SelectionMoved="addbrInkCanvas_SelectionMoved"
+                                           SelectionResized="addbrInkCanvas_SelectionResized" StrokeErased="addbrInkCanvas_StrokeErased" Background="{x:Null}" 
+                           
+                           
+                               >
+                                <InkCanvas.DefaultDrawingAttributes>
+                                    <DrawingAttributes Color="Black" FitToCurve="True" Height="2" IgnorePressure="False" IsHighlighter="False" StylusTip="Ellipse" StylusTipTransform="Identity" Width="2.0031496062992127"/>
+                                </InkCanvas.DefaultDrawingAttributes>
+
+                                <Image Name="tempImage"></Image>
+                            </InkCanvas>
+
+                            <Line Name="addbdCanvasHorizontalSizeLine"
+                                      Y1="{Binding ElementName=addbrInkCanvas, Path=ActualHeight}"
+                                      Y2="{Binding ElementName=addbrInkCanvas, Path=ActualHeight}"
+                                      X1="0"
+                                      X2="{Binding ElementName=addbrInkCanvas, Path=Width}"
+                                      Stroke="Black"
+                                      StrokeDashArray="4 5"></Line>
+                            <Line Name="addbdCanvasVerticalSizeLine"
+                                      Y1="0"
+                                      Y2="{Binding ElementName=addbrInkCanvas, Path=ActualHeight}"
+                                      X1="{Binding ElementName=addbrInkCanvas, Path=ActualWidth}"
+                                      X2="{Binding ElementName=addbrInkCanvas, Path=ActualWidth}"
+                                      Stroke="Black"
+                                      StrokeDashArray="4 5"></Line>
+
+                        </Grid>
+
+                    </ScrollViewer>
+                    <TextBlock Text="&#1054;&#1073;&#1097;&#1080;&#1081; &#1093;&#1086;&#1083;&#1089;&#1090;" Foreground="Gray" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Center"></TextBlock>
+                    <Grid VerticalAlignment="Top"
+                          Grid.Column="0"
+                      HorizontalAlignment="Right"
+                          Margin="0,2,15,0"
+                      Height="23">
+                        <Button
+                        x:Name="adbdCanvasErrorIcon"
+                        Visibility="Collapsed"
+                        Cursor="Hand"
+                        Margin="{Binding ElementName=adbdCanvasLoadingIcon, Path=Margin}" Click="adbdCanvasErrorIcon_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                            <UserControl:ErrorIcon></UserControl:ErrorIcon>
+                        </Button>
+                        <UserControl:LoadingIcon
+                        x:Name="adbdCanvasLoadingIcon"
+                    
+                        Margin="4"
+                        Thickness="10"
+                        Brush="Blue"
+                        Visibility="Collapsed"/>
+                    </Grid>
+
+                    <Viewbox Grid.Column="1" Stretch="Uniform" MaxWidth="100" MinWidth="80" Name="addbdCanvasViewbox">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock TextAlignment="Center" Text="&#x420;&#x430;&#x437;&#x43C;&#x435;&#x440; &#x43F;&#x435;&#x440;&#x430;" TextWrapping="Wrap" Foreground="Gray"></TextBlock>
+
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="addbdBrushSizeInfo"
+                                       TextAlignment="Right"
+                                       
+                                       Text="{Binding ElementName=addbrInkCanvas, Path=DefaultDrawingAttributes.Height}"
+                                       ></TextBlock>
+                                <TextBlock Text=" px" Grid.Column="1"></TextBlock>
+
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Name="addbdBrushSizeIncr" Height="20" Width="20"
+                                        Cursor="Hand"
+                                        Background="{x:Null}"
+                                        Foreground="{x:Null}"
+                                        BorderBrush="{x:Null}" Click="addbdBrushSizeIncr_Click">
+                                    <Image Source="Images/Plus.png"></Image>
+                                </Button>
+                                <Button Name="addbdBrushSizeDecr" Width="20" Margin="10,0,0,0"
+                                        Cursor="Hand"
+                                        Background="{x:Null}"
+                                        Foreground="{x:Null}"
+                                        BorderBrush="{x:Null}" Click="addbdBrushSizeDecr_Click">
+                                    <Image Source="Images/Minus.png"></Image>
+                                </Button>
+                            </StackPanel>
+
+                            <TextBlock Text="&#1062;&#1074;&#1077;&#1090;"
+                                       Foreground="Gray"
+                                       Margin="0,5,0,0"
+                                       TextAlignment="Center"
+                                       FontSize="10"></TextBlock>
+                            <Rectangle Name="addbdCanvasSetColor"
+                                       ToolTip="&#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077;, &#1095;&#1090;&#1086;&#1073;&#1099; &#1074;&#1099;&#1073;&#1088;&#1072;&#1090;&#1100; &#1094;&#1074;&#1077;&#1090;"
+                                    Height="30"
+                                    Cursor="Hand"
+                                    Width="{Binding ElementName=addbdCanvasSetColor, Path=Height}" MouseUp="addbdCanvasSetColor_Click" Focusable="False"
+                                    >
+                                <Rectangle.Triggers>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="addbdCanvasSetColor"
+                                                                 Storyboard.TargetProperty="Opacity"
+                                                                 To="0.8"
+                                                                 Duration="0:0:0.1"></DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="addbdCanvasSetColor"
+                                                                 Storyboard.TargetProperty="Opacity"
+                                                                 To="1"
+                                                                 Duration="0:0:0.1"></DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Rectangle.Triggers>
+
+                            </Rectangle>
+
+                            <TextBlock Text="&#1056;&#1077;&#1078;&#1080;&#1084;"  Margin="0,5,0,0" TextWrapping="Wrap" Foreground="Gray" TextAlignment="Center"></TextBlock>
+                            <DockPanel>
+                                <Button Name="adbdPenMode"
+                                        ToolTip="&#1050;&#1072;&#1088;&#1072;&#1085;&#1076;&#1072;&#1096;"
+                                        Height="20" Width="20"
+                                        Opacity="0.7"
+                                        BorderBrush="{x:Null}" Click="adbdPenMode_Click" Background="{x:Null}" Foreground="{x:Null}"
+                                        Margin="5,0,0,0">
+                                    <Image Source="Images/Pencil.png"/>
+
+                                </Button>
+                                <Button Name="adbdSelectMode"
+                                        Height="20" Width="20"
+                                        ToolTip="&#1042;&#1099;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077;"
+                                        Foreground="{x:Null}"
+                                        Margin="7,0,0,0"
+                                        BorderBrush="{x:Null}" Click="adbdSelectMode_Click" Background="{x:Null}">
+                                    <Image Source="Images/CanvasSelection.png"/>
+
+                                </Button>
+                                <Button Name="adbdRubbishMode"
+                                        Height="20" Width="20"
+                                        ToolTip="&#1051;&#1072;&#1089;&#1090;&#1080;&#1082;"
+                                        Foreground="{x:Null}"
+                                        BorderBrush="{x:Null}" Click="adbdRubbishMode_Click" Background="{x:Null}">
+                                    <Image Source="Images/Erase.png"/>
+                                </Button>
+                            </DockPanel>
+
+                            <CheckBox Content="&#1057;&#1075;&#1083;&#1072;&#1078;&#1080;&#1074;&#1072;&#1090;&#1100;" Foreground="Gray"
+                                      Margin="0,7,0,0"
+                                      FontSize="11"
+                                      IsChecked="{Binding ElementName=addbrInkCanvas, Path=DefaultDrawingAttributes.FitToCurve, Mode=TwoWay}"></CheckBox>
+
+                            <TextBlock Text="&#1060;&#1086;&#1085;"
+                                       Foreground="Gray"
+                                       TextAlignment="Center"
+                                       Margin="0,10,0,0"
+                                       ></TextBlock>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="addbdbtnDeleteCanvasBackground"
+                                        Grid.Column="0"
+                                        Cursor="Hand"
+                                        Margin="3,0,0,0"
+                                        ToolTip="&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100; &#1092;&#1086;&#1085;"
+                                        Click="addbdbtnDeleteCanvasBackground_Click"
+                                        Height="{Binding ElementName=addbdbtnChangeCanvasBackground, Path=Height}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                                    <Image Source="Images/Trash.png" Stretch="Uniform"></Image>
+                                </Button>
+
+                                <Button Name="addbdbtnChangeCanvasBackground"
+                                    Margin="3,0,3,0"
+                                    Grid.Column="1"
+                                    Cursor="Hand"
+                                    ToolTip="&#1048;&#1079;&#1084;&#1077;&#1085;&#1080;&#1090;&#1100; &#1080;&#1079;&#1086;&#1073;&#1088;&#1072;&#1078;&#1077;&#1085;&#1080;&#1077; &#1092;&#1086;&#1085;&#1072;"
+                                    Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="addbdbtnChangeCanvasBackground_Click">
+                                    <Image Source="Images/CanvasBackground.png" Stretch="Uniform"></Image>
+                                </Button>
+                            </Grid>
+
+                            <CheckBox Name="addbdckbxCanvasBackgroundFill"
+                                      Margin="0,4,0,0"
+                                      Foreground="Gray"
+                                      Visibility="Collapsed"
+                                      FontSize="10" Unchecked="addbdckbxCanvasBackgroundFill_Unchecked" Checked="addbdckbxCanvasBackgroundFill_Checked"
+                                      
+                                                                            >
+                                <TextBlock Text="&#1055;&#1086;&#1076;&#1075;&#1086;&#1085;&#1103;&#1090;&#1100; &#1088;&#1072;&#1079;&#1084;&#1077;&#1088; &#1080;&#1079;&#1086;&#1073;&#1088;&#1072;&#1078;&#1077;&#1085;&#1080;&#1103;"
+                                           
+                                           TextWrapping="Wrap"></TextBlock>
+
+                            </CheckBox>
+
+                            <Button Name="addbdbtnSaveCanvasToFile"
+                                    Margin="0,10,0,0"
+                                    Height="32"
+                                    Click="OnSaveClick"
+                                    ToolTip="&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100;"
+                                    Width="{Binding ElementName=addbdbtnSaveCanvasToFile, Path=Height}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}"
+                                    >
+                                <Image Source="Images/SaveCanvas.png" Cursor="Hand"></Image>
+                            </Button>
+
+                            <TextBlock Text="&#1056;&#1072;&#1079;&#1084;&#1077;&#1088; &#1093;&#1086;&#1083;&#1089;&#1090;&#1072;:"
+                                       Foreground="Gray"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Center"
+                                       FontSize="11"></TextBlock>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="0"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="addbdtxtbxCanvasSizeHeight" Grid.Column="2" Margin="3,0,0,0" KeyDown="addbdtxtbxCanvasSizeHeight_KeyDown"></TextBox>
+                                <TextBlock Text="x" Foreground="Gray" Grid.Column="1"></TextBlock>
+                                <TextBox Margin="0,0,3,0" Name="addbdtxtbxCanvasSizeWidth" Grid.Column="0" KeyDown="addbdtxtbxCanvasSizeHeight_KeyDown"></TextBox>
+                            </Grid>
+                            <Button Name="addbdbtnVanvasSizeSend"
+                                    Height="20"
+                                    Margin="3"
+                                    Background="{x:Null}"
+                                    Cursor="Hand"
+                                    
+                                    Content="&#1055;&#1088;&#1080;&#1084;&#1077;&#1085;&#1080;&#1090;&#1100;"
+                                    Click="addbdbtnVanvasSizeSend_Click"></Button>
+                            <TextBlock Name="addbdtxblCanvasSizeInfo" FontSize="10" TextWrapping="Wrap" Grid.Column="1" Foreground="Gray" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+
+                            <Grid Height="35">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="addbdCanvasZoomIn"
+                                    Grid.Column="0"
+                                        Background="{x:Null}"
+                                        Foreground="{x:Null}"
+                                        BorderBrush="{x:Null}"
+                                        Cursor="Hand"
+                                    Height="{Binding ElementName=addbdCanvasZoomIn, Path=Width}" Click="addbdCanvasZoomIn_Click"
+>
+                                    <Image Source="Images/ZoomIn.png"></Image>
+                                </Button>
+                                <Button Name="addbdCanvasZoomOut"
+                                    Grid.Column="1"
+                                        Background="{x:Null}"
+                                        Foreground="{x:Null}"
+                                        BorderBrush="{x:Null}"
+                                        Cursor="Hand"
+                                    Height="{Binding ElementName=addbdCanvasZoomOut, Path=Width}" Click="addbdCanvasZoomOut_Click" 
+                                    >
+                                    <Image Source="Images/ZoomOut.png"></Image>
+                                </Button>
+                            </Grid>
+                            <TextBlock Name="addbdCanvasLayoutScale"
+                                       TextAlignment="Center"
+                                       Text="1"
+                                       FontSize="10"
+                                       Foreground="Gray"></TextBlock>
+                        </StackPanel>
+                    </Viewbox>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="0"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Name="txblTextAddBoarddescription" Foreground="Gray" TextAlignment="Center" FontSize="10"></TextBlock>
+                        <UserControl:BeautifullTextBlock x:Name="txblTextAddBoard"
+                               Grid.Column="0"
+                           Text=""
+                           Grid.Row="1"
+                           VerticalAlignment="Center"
+                           SnapsToDevicePixels="False" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FF2E2E2E"
+                           />
+                    </StackPanel>
+                </Grid>
+
+
+            </Grid>
+
+            <Border Name="grbtnAddionBoardSwitcher"
+                          CornerRadius="0,5,5,0"
+                          Background="White"
+                          Margin="0,0,0,7"
+                          Height="20"
+                          Width="20"
+                          VerticalAlignment="Bottom"
+                          HorizontalAlignment="Left">
+                <Button   Name="btnAddBoardSwitcher"
+                                   
+                                   Height="{Binding ElementName=grbtnAddionBoardSwitcher, Path=Height}"
+                                   Width="{Binding ElementName=grbtnAddionBoardSwitcher, Path=Width}"
+                                   Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}" MouseEnter="btnAddBoardSwitcher_MouseEnter" MouseLeave="btnAddBoardSwitcher_MouseLeave" RenderTransformOrigin="0.5,0.5" Click="btnAddBoardSwitcher_Click"
+                                   >
+                    <Grid>
+                        <Image Name="btnAddBoardSwitcherIcon"
+                                   Source="Images/AddBoardSwitchIcon.png" HorizontalAlignment="Right">
+
+                        </Image>
+                    </Grid>
+                </Button>
+            </Border>
+
+           
+        </Grid>
+
+        <Grid Name="BottomPanel" Grid.Row="2">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="{Binding ElementName=MessagesAreaViewer, Path=Background.Color}" Offset="0"/>
+                    <GradientStop Color="#D3FFFFFF" Offset="0.05"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Name="AttachmentButton" Grid.Column="0"
+                    Cursor="Hand" Click="AttachmentButton_Click"
+                    Width="37"
+                    MaxHeight="37"
+                    MinHeight="37"
+                    Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}"
+                    Drop="AttachmentButton_Drop" AllowDrop="True">
+                <Grid>
+                    <Image Name="btmimgAttachment"
+                           Source="Images/FileSelect.png" Stretch="Uniform"></Image>
+                    <TextBlock Name="ButtonFileName"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"
+                               
+                               FontSize="10"
+                               Foreground="Black" FontWeight="Bold"/>
+                </Grid>
+            </Button>
+
+            <Button Name="btnDeleteAttachment"
+                            Margin="3"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Height="13"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Width="{Binding ElementName=btnDeleteAttachment, Path=Height}"
+                            Visibility="Collapsed"
+                            Cursor="Hand" Click="btnDeleteAttachment_Click"
+                            >
+                <Image Source="Images/Cansel.png"></Image>
+            </Button>
+
+            <TextBox Name="MessageInput"
+                         Grid.Column="1"
+                         
+                         SelectionBrush="#FF3399FF"
+                         HorizontalAlignment="Stretch"
+                         KeyDown="MessageInput_KeyDown"
+                         TextWrapping="Wrap"
+                         BorderBrush="{x:Null}" Background="{x:Null}"
+                         UndoLimit="200"
+                         TextChanged="MessageInput_TextChanged"
+                         Drop="AttachmentButton_Drop"
+                         AllowDrop="True"
+                         ScrollViewer.CanContentScroll="True" AutoWordSelection="True" IsInactiveSelectionHighlightEnabled="True"/>
+
+
+            <Grid Name="SendMessageButtonArea"
+                   Grid.Column="3">
+                <Button Name="MessageSend"
+                   
+                    VerticalAlignment="Center"
+                    Click="MessageSend_Click"
+                    Visibility="Visible"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}">
+                    <Image Source="Images/SendMessage.png"></Image>
+
+                </Button>
+                <UserControl:LoadingIcon Grid.Column="3"
+                                     Margin="3"
+                                     Brush="Blue"
+                                     Thickness="10"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     Visibility="Collapsed"
+                            x:Name="griSendMessageLoading"/>
+            </Grid>
+            <Grid Name="addbdSendTextArea"
+                  Grid.Column="3"
+                  Visibility="Collapsed">
+                <TextBlock Name="adbdTextDescription"
+                           TextWrapping="Wrap"
+                           Foreground="Gray"
+                           FontSize="9"
+                           TextAlignment="Center"
+                           Text="&#1042;&#1072;&#1096; &#1090;&#1077;&#1082;&#1090; &#1074;&#1080;&#1076;&#1077;&#1085; &#1076;&#1088;&#1091;&#1075;&#1091;"></TextBlock>
+                <UserControl:LoadingIcon
+                        x:Name="adbdTextLoadingIcon"
+                        Grid.Column="1"
+                        Margin="4"
+                        Thickness="10"
+                        Brush="Blue"
+                        Visibility="Collapsed"/>
+                <Button
+                        x:Name="adbdTextErrorIcon"
+                        Visibility="Collapsed"
+                        Cursor="Hand"
+                        Margin="{Binding ElementName=adbdCanvasLoadingIcon, Path=Margin}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="adbdTextErrorIcon_Click">
+                    <UserControl:ErrorIcon></UserControl:ErrorIcon>
+                </Button>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

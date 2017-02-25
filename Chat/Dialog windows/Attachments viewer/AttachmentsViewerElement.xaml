@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="Chat.AttachmentsViewerElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="40" Width="auto">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2">
+        <StackPanel Orientation="Horizontal">
+            <Grid ClipToBounds="False">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition Width="0"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="IP" FontWeight="Medium" HorizontalAlignment="Center"
+                   Grid.Column="0"
+                   Grid.Row="0"></TextBlock>
+                <TextBlock Name="IP" HorizontalAlignment="Center"
+                   Grid.Column="0"
+                   Grid.Row="1"></TextBlock>
+
+                <TextBlock Text="Имя файла" FontWeight="Medium" HorizontalAlignment="Center"
+                   Grid.Column="1"
+                   Grid.Row="0"></TextBlock>
+                <TextBlock Name="FileName" HorizontalAlignment="Center"
+                   Grid.Column="1"
+                   Grid.Row="1"></TextBlock>
+
+                <TextBlock Text="Расширение" HorizontalAlignment="Center"
+                   Grid.Column="2"
+                   FontWeight="Medium"
+                   Grid.Row="0"></TextBlock>
+                <TextBlock Name="FileExt" HorizontalAlignment="Center"
+                   Grid.Column="2"
+                   Grid.Row="1"></TextBlock>
+
+                <TextBlock Text="Кол-во скачиваний" HorizontalAlignment="Center"
+                   Grid.Column="3"
+                   FontWeight="Medium"
+                   Grid.Row="0"></TextBlock>
+                <TextBlock Name="DownloadsCount" HorizontalAlignment="Center"
+                   Grid.Column="3"
+                   Grid.Row="1"></TextBlock>
+
+                
+            </Grid>
+
+            <Button Name="OpenFolder"
+                    Cursor="Hand"
+                    ToolTip="Показать в папке"
+                    Grid.Row="0"
+                    Margin="7"
+                    Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}">
+                <Image Source="Images/Folder.png"></Image>
+            </Button>
+
+            <Button Name="Unregister"
+                    Cursor="Hand"
+                    ToolTip="Удалить из списка файлов"
+                    Grid.Row="0"
+                    Margin="7"
+                    Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="Images/Delete.png"></Image>
+                </Button>
+        </StackPanel>
+    </Border>
+</UserControl>

@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Chat.LoadingIcon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="auto" Width="auto" IsVisibleChanged="UserControl_IsVisibleChanged">
+    <Viewbox Name="box">
+        <StackPanel Name="stack">
+            <Path Stroke="Red" StrokeThickness="5" Name="ellipse">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="0,100" IsClosed="False">
+                                <LineSegment Point="0,100"/>
+                                <ArcSegment Point="100,205" RotationAngle="60"
+                                        Size="100,100" IsLargeArc="True" SweepDirection="Clockwise"/>
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+        </StackPanel>
+    </Viewbox>
+</UserControl>

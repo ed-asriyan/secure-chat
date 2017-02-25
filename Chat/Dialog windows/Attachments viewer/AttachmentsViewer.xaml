@@ -1,0 +1,43 @@
+﻿<Window x:Class="Chat.AttachmentsViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" ShowInTaskbar="True"
+        Title="Прикреплённые файлы" Height="350" Width="600" WindowStyle="ToolWindow" MaxWidth="600" MinWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Список вложенных файлов"
+               Grid.Row="0"
+                   FontWeight="Medium"
+                   FontSize="14"
+               HorizontalAlignment="Left"
+                   Margin="15,0,0,0"
+               VerticalAlignment="Center"></TextBlock>
+
+        
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    Margin="0,0,0,4"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Bottom">
+            <TextBlock Text="Фильтр по IP:"
+                       Margin="0,0,4,0"
+                       VerticalAlignment="Center"
+                       Foreground="Gray"></TextBlock>
+            <TextBox Name="IpSearch"
+                 Width="120"
+                     Margin="5"
+                     Foreground="#FF4D4D4D" TextChanged="IpSearch_TextChanged"
+                 ></TextBox>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Name="StackPanel"
+                    ></StackPanel>
+        </ScrollViewer>
+
+
+    </Grid>
+</Window>

@@ -1,0 +1,320 @@
+﻿<Window x:Class="Chat.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:UserControl="clr-namespace:Chat"
+        Title="Параметры" Height="500" Width="465" MaxWidth="465" MinWidth="465" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0">
+            <StackPanel>
+                <Label Content="Персональные" HorizontalAlignment="Center"
+                       FontSize="15" FontWeight="Medium"></Label>
+
+                <Canvas Height="120" Visibility="Visible">
+                    <TextBlock Text="Ваше имя:"
+                               TextAlignment="Right"
+                               Canvas.Left="146" Canvas.Top="88"
+                               FontSize="15"></TextBlock>
+                    <TextBox Name="UserName" Width="175"
+                                  Canvas.Left="231" Canvas.Top="88"
+                                  FontSize="15" TextChanged="UserName_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="UserNameErrorIcon"
+                                       ToolTip="Поле не может быть пустым или содержать только пробелы"
+                                       Canvas.Left="411" Canvas.Top="88"
+                                       Visibility="Collapsed"
+                                       Height="20" Width="{Binding ElementName=UserNameErrorIcon, Path=Height}"></UserControl:ErrorIcon>
+                    <Border Canvas.Left="10" Canvas.Top="8" BorderBrush="Black" BorderThickness="1">
+                        <Image Name="ProfilePhoto"
+                           Height="100" Width="{Binding ElementName=ProfilePhoto, Path=Height}"
+                           ToolTip="Нажмите чтобы выбрать другое изображение"
+                           Cursor="Hand"
+                            MouseLeftButtonUp="ProfilePhoto_MouseLeftButtonUp">
+                        </Image>
+                    </Border>
+                    <Button Name="ClearPhoto"
+                                VerticalAlignment="Top" HorizontalAlignment="Right"
+                                Height="25" Width="77" FontWeight="Medium"
+                                Background="{x:Null}" BorderBrush="Black" BorderThickness="1.3"
+                                Content="Сбросить" FontSize="13.9" Click="ClearPhoto_Click" Canvas.Left="111" Canvas.Top="8"
+                                ></Button>
+
+
+                </Canvas>
+
+                <Label Content="Основные" HorizontalAlignment="Center"
+                       FontSize="15"
+                       FontWeight="Medium"></Label>
+                <Canvas Height="165" Visibility="Visible">
+                    <TextBlock Text="Порт для входящих соединений:"
+                                     FontSize="15"
+                                     Canvas.Left="17" Canvas.Top="11"></TextBlock>
+                    <TextBox Name="ServerPort" Width="79"
+                             Canvas.Left="261" Canvas.Top="9"
+                             FontSize="15" TextChanged="ServerPort_TextChanged"></TextBox>
+                    <Button Name="PortToDefault" Content="Сбросить" Canvas.Left="349" Canvas.Top="8" Height="23" Click="PortToDefault_Click"></Button>
+                    <UserControl:ErrorIcon x:Name="PortToDefaultErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать целое число в интервале от 1 до 65535"
+                                       Canvas.Left="410" Canvas.Top="11"
+                                       Height="20" Width="{Binding ElementName=PortToDefault, Path=Height}"></UserControl:ErrorIcon>
+
+                    <TextBlock Text="Секретное слово по умолчанию:"
+                                     FontSize="15"
+                                     Canvas.Left="15" Canvas.Top="38"></TextBlock>
+                    <TextBox Name="SecretWord" Width="146"
+                             Canvas.Left="260" Canvas.Top="36"
+                             ToolTip=""
+                             FontSize="15"></TextBox>
+
+                    <CheckBox Name="DisableEncryptionWhithLocalComputers" Canvas.Left="15" Canvas.Top="64" Width="391" Height="20">
+                        <TextBlock FontSize="13" Text="Отключить шифрование с компьютерами в локальной сети"
+                               TextWrapping="Wrap"
+                               ></TextBlock>
+                    </CheckBox>
+
+                    <CheckBox Name="AlowOtherConnections" Canvas.Left="15" Canvas.Top="86" Width="391" Height="37">
+                        <TextBlock FontSize="13" Text="Принимать подключения от людей, которых нет в списке подключений"
+                               TextWrapping="Wrap" Height="42"
+                               ></TextBlock>
+                    </CheckBox>
+
+                    <TextBlock Name="AlowOtherConnectionsHelp"
+                               Text="?"
+                               FontSize="25"
+                               Cursor="Hand"
+                               FontWeight="Bold" Canvas.Left="395" Canvas.Top="86" MouseUp="AlowOtherConnectionsHelp_MouseUp"></TextBlock>
+
+                    <CheckBox Name="AlowOtherMessages"
+                              IsEnabled="{Binding ElementName=AlowOtherConnections, Path=IsChecked}"
+                              Canvas.Left="15" Canvas.Top="126"
+                              Width="391" Height="37">
+                        <TextBlock FontSize="13"
+                                   Text="Реагировать на запросы людей, которых нет в списке подключений"
+                                   TextWrapping="Wrap" Height="42"></TextBlock>
+                    </CheckBox>
+
+                    <TextBlock Name="AlowOtherMessagesHelp"
+                               Text="?"
+                               FontSize="25"
+                               Cursor="Hand"
+                               FontWeight="Bold" Canvas.Left="395" Canvas.Top="126" MouseUp="AlowOtherMessagesHelp_MouseUp"></TextBlock>
+
+
+                </Canvas>
+                <Label Content="Интерфейс &amp; Звук" FontSize="15" FontWeight="Medium" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                <Canvas Height="160">
+                    <TextBlock Text="Фон чата:" FontSize="15" TextAlignment="Right" Canvas.Left="15" Canvas.Top="10"/>
+                    <Rectangle Grid.Column="1"
+                               Height="20" Width="60"
+                               Cursor="Hand"
+                               HorizontalAlignment="Left"
+                               Name="ChatBackground"
+                               MouseLeftButtonUp="ChatBackground_MouseLeftButtonUp"
+                               Canvas.Left="116" Canvas.Top="10" Stroke="Black"
+                               />
+
+                    <TextBlock Text="Цвет сообщения:" FontSize="15" TextAlignment="Right" Canvas.Left="215" Canvas.Top="10"/>
+                    <Rectangle Height="20" Width="60"
+                               Cursor="Hand"
+                               HorizontalAlignment="Left"
+                               Name="MessageBackground"
+                               Canvas.Left="347" Canvas.Top="10" Stroke="Black" MouseLeftButtonUp="MessageBackground_MouseLeftButtonUp"
+
+                               />
+
+                    <TextBlock Text="Фон программы:" FontSize="15" TextAlignment="Right" Canvas.Left="215" Canvas.Top="35"/>
+                    <Rectangle Height="20" Width="60"
+                               Cursor="Hand"
+                               HorizontalAlignment="Left"
+                               Name="ProgramBackground"
+                               Canvas.Left="347" Canvas.Top="35" Stroke="Black" MouseLeftButtonUp="ProgramBackground_MouseLeftButtonUp"
+
+                               />
+
+                    <CheckBox Name="MessageSound" Content="Звук при получении сообщения" FontSize="15" Canvas.Left="15" Canvas.Top="61"></CheckBox>
+
+                    <CheckBox Name="UpperCase" FontSize="15" Content="Начинать предложения с Большой буквы" Canvas.Left="15" Canvas.Top="81"></CheckBox>
+
+                    <CheckBox Name="ShowMessagesNotifications" FontSize="14" Content="Показывать всплывающие уведомления о новых сообщениях" Canvas.Left="15" Canvas.Top="120"></CheckBox>
+
+                    <CheckBox Name="ShowTrayIcon" FontSize="15" Content="Отображать иконку в трее" Canvas.Left="15" Canvas.Top="101"></CheckBox>
+
+                    <CheckBox Name="AskForExit" FontSize="15" Content="Показывать диалоговое окно при закрытии" Canvas.Left="15" Canvas.Top="138"></CheckBox>
+                    
+                </Canvas>
+
+                <Label Content="Файлы" FontSize="15" FontWeight="Medium" HorizontalAlignment="Center"></Label>
+                <Canvas Height="120" Visibility="Visible">
+                    <TextBlock Text="Максимальный размер автозагрузки изображений (МБ):"
+                                     FontSize="14"
+                                     Canvas.Left="15" Canvas.Top="12"></TextBlock>
+                    <TextBox Name="MaxPhotoSize" Width="200"
+                             Canvas.Left="50" Canvas.Top="36"
+                             FontSize="15" TextChanged="MinPhotoSize_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="MaxPhotoSizeErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать неотрицательное целое число"
+                                       Canvas.Left="255" Canvas.Top="36"
+                                       Height="20" Width="{Binding ElementName=PortToDefault, Path=Height}"></UserControl:ErrorIcon>
+
+                    <TextBlock Text="Максимальный размер автозагрузки любых файлов (МБ):"
+                                     FontSize="14"
+                                     Canvas.Left="15" Canvas.Top="65"></TextBlock>
+                    <TextBox Name="MaxFileSize" Width="200"
+                             Canvas.Left="50" Canvas.Top="85"
+                             FontSize="15" TextChanged="MaxFileSize_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="MaxFileSizeErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать неотрицательное целое число"
+                                       Canvas.Left="255" Canvas.Top="89"
+                                       Height="20" Width="{Binding ElementName=PortToDefault, Path=Height}"></UserControl:ErrorIcon>
+                </Canvas>
+
+                <Label Content="Соединение" FontSize="15" FontWeight="Medium" Margin="0,10,0,0" HorizontalAlignment="Center"></Label>
+                <Canvas Height="70">
+                    <TextBlock Text="Таймаут соединения (мс):"
+                                     FontSize="15"
+                                     Canvas.Left="15" Canvas.Top="12"></TextBlock>
+                    <TextBox Name="ConnectionTimeout" Width="190"
+                             Canvas.Left="216" Canvas.Top="12"
+                             FontSize="15" TextChanged="ConnectionTimeout_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="ConnectionTimeoutErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать положительное целое число"
+                                       Canvas.Left="411" Canvas.Top="12"
+                                       Height="20" Width="{Binding ElementName=ConnectionTimeout, Path=Height}"></UserControl:ErrorIcon>
+
+                    <TextBlock Text="Блок шифрования (байт):"
+                                     FontSize="15"
+                                     Canvas.Left="15" Canvas.Top="40"></TextBlock>
+                    <TextBox Name="EncryptionBlock" Width="190"
+                             Canvas.Left="216" Canvas.Top="40"
+                             FontSize="15" TextChanged="EncryptionBlock_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="EncryptionBlockErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать положительное целое число"
+                                       Canvas.Left="411" Canvas.Top="40"
+                                       Height="20" Width="{Binding ElementName=EncryptionBlock, Path=Height}"></UserControl:ErrorIcon>
+
+
+
+                </Canvas>
+
+                <Label Content="Longpoll" FontSize="15" FontWeight="Medium" HorizontalAlignment="Center"></Label>
+                <Canvas Height="70">
+                    <TextBlock Text="Кол-во одновременных соединений:"
+                                     FontSize="14"
+                                     Canvas.Left="15" Canvas.Top="15"></TextBlock>
+                    <TextBox Name="LongpollThreadsCount" Width="136"
+                             Canvas.Left="270" Canvas.Top="12"
+                             FontSize="15" TextChanged="LongpollThreadsCount_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="LongpollThreadsCountErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать положительное целое число"
+                                       Canvas.Left="411" Canvas.Top="12"
+                                       Height="20" Width="{Binding ElementName=LongpollThreadsCount, Path=Height}"></UserControl:ErrorIcon>
+
+                    <TextBlock Text="Таймаут ожидания ответа (мс):"
+                                     FontSize="14"
+                                     Canvas.Left="15" Canvas.Top="40"></TextBlock>
+                    <TextBox Name="LongpollTimeout" Width="136"
+                             Canvas.Left="270" Canvas.Top="40"
+                             FontSize="15" TextChanged="LongpollTimeout_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="LongpollTimeoutErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать положительное целое число"
+                                       Canvas.Left="411" Canvas.Top="39"
+                                       Height="20" Width="{Binding ElementName=LongpollTimeout, Path=Height}"></UserControl:ErrorIcon>
+
+
+                </Canvas>
+
+                <Label Content="Другое" FontSize="15" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                <Canvas Height="155">
+                    <TextBlock Text="Интервал между проверками собеседника на онлайн (мс):"
+                                     FontSize="13" TextWrapping="Wrap"
+                                     Canvas.Left="15" Canvas.Top="15" Width="180"></TextBlock>
+                    <TextBox Name="IntervalOnlineCheck" Width="190"
+                             Canvas.Left="216" Canvas.Top="25"
+                             FontSize="15" TextChanged="IntervalOnlineCheck_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="IntervalOnlineCheckErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать положительное целое число"
+                                       Canvas.Left="411" Canvas.Top="26"
+                                       Height="20" Width="{Binding ElementName=IntervalOnlineCheck, Path=Height}"></UserControl:ErrorIcon>
+
+                    <TextBlock Text="Интервал между обновлениями списка локальных устройств (мс):"
+                                     FontSize="13" TextWrapping="Wrap"
+                                     Canvas.Left="15" Canvas.Top="56" Width="199"></TextBlock>
+                    <TextBox Name="LocalComputersUpdateInterval" Width="190"
+                             Canvas.Left="216" Canvas.Top="64"
+                             FontSize="15" TextChanged="LocalComputersUpdateInterval_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="LocalComputersUpdateIntervalErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать положительное целое число"
+                                       Canvas.Left="411" Canvas.Top="65"
+                                       Height="20" Width="{Binding ElementName=LocalComputersUpdateInterval, Path=Height}"></UserControl:ErrorIcon>
+
+                    <TextBlock Text="Время отображения всплывающего уведомления (мс):"
+                                     FontSize="13" TextWrapping="Wrap"
+                                     Canvas.Left="15" Canvas.Top="96" Width="199"></TextBlock>
+                    <TextBox Name="NotificationTimeSpan" Width="190"
+                             Canvas.Left="216" Canvas.Top="110"
+                             FontSize="15" TextChanged="NotificationTimeSpan_TextChanged"></TextBox>
+                    <UserControl:ErrorIcon x:Name="NotificationTimeSpanErrorIcon"
+                                       Visibility="Collapsed"
+                                       ToolTip="Поле должно содержать положительное целое число"
+                                       Canvas.Left="411" Canvas.Top="113"
+                                       Height="20" Width="{Binding ElementName=NotificationTimeSpan, Path=Height}"></UserControl:ErrorIcon>
+
+
+                </Canvas>
+
+                <Button Name="ClearParameters"
+                        Content="Сбросить настройки"
+                        FontWeight="Medium"
+                        BorderBrush="Black"
+                        Height="23"
+                        BorderThickness="1.3"
+                        Cursor="Hand"
+                        Background="{x:Null}" Click="ClearParameters_Click"
+                        ></Button>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Name="Cansel"
+                BorderBrush="Black"
+                Grid.Column="1"
+
+                BorderThickness="1"
+                IsDefault="True"
+                Background="{x:Null}"
+                Cursor="Hand"
+                Content="Отмена"
+
+                FontWeight="Medium" FontSize="13" Click="Cansel_Click"></Button>
+
+            <Button Name="OK"
+                BorderBrush="Black"
+                
+                Focusable="False"
+                BorderThickness="1.35"
+                IsDefault="True"
+                Background="{x:Null}"
+                Cursor="Hand"
+                Content="Сохранить"
+                Click="OK_Click"
+                FontWeight="Medium" FontSize="13"></Button>
+        </Grid>
+    </Grid>
+</Window>

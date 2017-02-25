@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Chat.SearchLoacalItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:UserControl="clr-namespace:Chat"
+             Height="25" Width="auto">
+    <StackPanel Orientation="Horizontal">
+        <TextBlock Text="IP:" Width="30"></TextBlock>
+        <TextBlock Name="IP" Width="100"></TextBlock>
+        
+        <TextBlock Text="Имя:" Width="30"></TextBlock>
+        <Grid Width="120" Margin="2" HorizontalAlignment="Left">
+            <TextBlock Name="NameUser" HorizontalAlignment="Left" Visibility="Collapsed"></TextBlock>
+            <UserControl:LoadingIcon HorizontalAlignment="Left" x:Name="LoadingIcon"></UserControl:LoadingIcon>
+            <UserControl:ErrorIcon HorizontalAlignment="Left" x:Name="ErrorIcon" Visibility="Collapsed"></UserControl:ErrorIcon>
+        </Grid>
+        <Button Name="OpenChat" Content="Открыть чат" Visibility="Collapsed" Click="OpenChat_Click"></Button>
+    </StackPanel>
+</UserControl>

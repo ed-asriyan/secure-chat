@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F8A921A4-0DF9-4F69-8F52-4D8ABEEB9B01}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Chat</RootNamespace>
+    <AssemblyName>Chat</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.9.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>E493E364B1E910CD3038A14C3798336F9CDFB67B</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Chat_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Nat">
+      <HintPath>..\Mono.Nat.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Controls\BeautifullLabel.xaml.cs">
+      <DependentUpon>BeautifullLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BeautifullTextBlock.xaml.cs">
+      <DependentUpon>BeautifullTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Bases\ConnectionBase.cs" />
+    <Compile Include="Dialog windows\Attachments viewer\AttachmentsViewer.xaml.cs">
+      <DependentUpon>AttachmentsViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog windows\Attachments viewer\AttachmentsViewerElement.xaml.cs">
+      <DependentUpon>AttachmentsViewerElement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog windows\AddConnectionWindow.xaml.cs">
+      <DependentUpon>AddConnectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Bases\AttachmentsBase.cs" />
+    <Compile Include="Event Args\InckCanvasStrokesChangedEventArgs.cs" />
+    <Compile Include="Helper\Cells.cs" />
+    <Compile Include="ChatArea\Messages\Attachments controls\AttachmentControl.xaml.cs">
+      <DependentUpon>AttachmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ErrorIcon\ErrorIcon.xaml.cs">
+      <DependentUpon>ErrorIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Trio.cs" />
+    <Compile Include="ChatArea\Messages\Attachment.cs" />
+    <Compile Include="ChatArea\ChatConnection.cs" />
+    <Compile Include="ChatArea\ChatControlTabHeader.xaml.cs">
+      <DependentUpon>ChatControlTabHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChatArea\ChatControlTabs.xaml.cs">
+      <DependentUpon>ChatControlTabs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditedLabel.xaml.cs">
+      <DependentUpon>EditedLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="API and Network\Encryption.cs" />
+    <Compile Include="Event Args\IncCanvasBackgroundChanged.cs" />
+    <Compile Include="Event Args\IncCanvasSizeChanged.cs" />
+    <Compile Include="Event Args\IPEventArgs.cs" />
+    <Compile Include="Controls\LoadingIcon.xaml.cs">
+      <DependentUpon>LoadingIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Bases\LocalComputersBase.cs" />
+    <Compile Include="Bases\HistoryElement.cs" />
+    <Compile Include="Dialog windows\RequestHistoryViewer\HistoryViewer.xaml.cs">
+      <DependentUpon>HistoryViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="API and Network\LocalNetwork.cs" />
+    <Compile Include="Event Args\LongpollConnectEventArgs.cs" />
+    <Compile Include="Bases\LongpollOnlyConnectionBase.cs" />
+    <Compile Include="API and Network\NAT.cs" />
+    <Compile Include="Helper\Pair.cs" />
+    <Compile Include="Event Args\ProcessEventArgs.cs" />
+    <Compile Include="Event Args\RecievedDataEventArgs.cs" />
+    <Compile Include="Event Args\RecievedMessageEventArgs.cs" />
+    <Compile Include="API and Network\ActionData.cs" />
+    <Compile Include="Event Args\UserBeginTypingEventArgs.cs" />
+    <Compile Include="Helper\Utility.cs" />
+    <Compile Include="Helper\Quadruplet.cs" />
+    <Compile Include="Bases\PasswordBase.cs" />
+    <Compile Include="ChatArea\NewMessageNotificationWindow.xaml.cs">
+      <DependentUpon>NewMessageNotificationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChatArea\InkCanvas strokes\Point.cs" />
+    <Compile Include="Dialog windows\SearchLocal\SearchLoacalItem.xaml.cs">
+      <DependentUpon>SearchLoacalItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog windows\SearchLocal\SearchUsersInLocalWindow.xaml.cs">
+      <DependentUpon>SearchUsersInLocalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ISerializable.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Bases\RequestHistoryBase.cs" />
+    <Compile Include="ChatArea\InkCanvas strokes\StrokeLike.cs" />
+    <Compile Include="ChatArea\InkCanvas strokes\PointList.cs" />
+    <Compile Include="ChatArea\InkCanvas strokes\Settings.cs" />
+    <Compile Include="Dialog windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChatArea\InkCanvas strokes\StrokeLikeList.cs" />
+    <Compile Include="Styles\CustomizedWindow\VS2012WindowStyle.cs" />
+    <Compile Include="Event Args\TextEventArgs.cs" />
+    <Page Include="Controls\BeautifullLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BeautifullTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog windows\Attachments viewer\AttachmentsViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog windows\Attachments viewer\AttachmentsViewerElement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog windows\AddConnectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChatArea\ChatBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChatArea\ChatControlTabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChatArea\ChatControlTabs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChatArea\Messages\Attachments controls\AttachmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\EditedLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ErrorIcon\ErrorIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoadingIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog windows\RequestHistoryViewer\HistoryViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChatArea\ChatBox.xaml.cs">
+      <DependentUpon>ChatBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChatArea\Messages\Message.cs" />
+    <Compile Include="ChatArea\Messages\MessageControl.xaml.cs">
+      <DependentUpon>MessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="API and Network\API.cs" />
+    <Compile Include="API and Network\NetServer.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="ChatArea\Messages\MessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog windows\SearchLocal\SearchLoacalItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog windows\SearchLocal\SearchUsersInLocalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog windows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChatArea\NewMessageNotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CustomizedWindow\VS2012WindowStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\SendMessage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\PenTyping.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Messages\Images\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Messages\Attachments controls\Images\Download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ViewFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Messages\Images\Checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Messages\Images\Unchecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\ErrorIcon\ErrorIco.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\Loading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\Trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Messages\Attachments controls\Images\Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\SelectAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\Cansel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\AddBoardSwitchIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\Pencil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\CanvasSelection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\Erase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\CanvasBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\SaveCanvas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\ZoomOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ChatArea\Images\ZoomIn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Log.png" />
+    <Resource Include="Dialog windows\RequestHistoryViewer\Images\Update.png" />
+    <Resource Include="Icon.ico" />
+    <Resource Include="IconN.ico" />
+    <Resource Include="Properties\ProfilePhotoDefault.png" />
+    <Resource Include="GetStarted.png" />
+    <Resource Include="ChatArea\Images\NewMessage.png" />
+    <None Include="ChatArea\Images\Pencil.ico" />
+    <Resource Include="Dialog windows\Attachments viewer\Images\Folder.png" />
+    <Resource Include="Dialog windows\Attachments viewer\Images\Delete.png" />
+    <Resource Include="Images\Search.png" />
+    <Resource Include="Images\Settings.png" />
+    <Resource Include="ChatArea\Images\Minus.png" />
+    <Resource Include="ChatArea\Images\Plus.png" />
+    <Resource Include="ChatArea\Images\Search.png" />
+    <Resource Include="ChatArea\Images\Files.png" />
+    <Resource Include="ChatArea\Messages\Attachments controls\Images\Cansel.png" />
+    <Resource Include="ChatArea\Images\Tools.png" />
+    <Resource Include="ChatArea\Images\FileSelect.png" />
+    <Resource Include="ChatArea\Images\NoProfilePhoto.png" />
+    <Resource Include="ChatArea\Messages\Attachments controls\Images\Folder.png" />
+    <Content Include="ChatArea\Sounds\groupon_chime.mp3" />
+    <Content Include="ChatArea\Sounds\groupon_chime.wav" />
+    <None Include="Resources\groupon_chime.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

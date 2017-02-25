@@ -1,0 +1,119 @@
+﻿<Window x:Class="Chat.MainWindow"
+        x:Name="mWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Мессенджер" Height="650" Width="900"
+        xmlns:UserControl="clr-namespace:Chat"
+        MinHeight="450" MinWidth="550" Background="#EFEFF2"
+        Style="{StaticResource VS2012WindowStyle}" Icon="Icon.ico" StateChanged="mWindow_StateChanged" Closing="mWindow_Closing">
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#EFEFF2" Offset="0"/>
+                <GradientStop Color="{Binding ElementName=mWindow, Path=Background.Color}" Offset="0.007"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Canvas Grid.Row="0">
+             
+            <Label Name="LocalIP"
+                   Canvas.Left="10"
+                   FontSize="20"
+                   
+                   Content="Локальный IP:"
+                   RenderTransformOrigin="0,0" MouseEnter="LocalIP_MouseEnter" MouseLeave="LocalIP_MouseLeave" MouseRightButtonDown="LocalIP_MouseRightButtonDown"/>
+
+            <StackPanel Name="PublicIPArea"
+                        Width="auto"
+                        Canvas.Left="10"
+                        Canvas.Bottom="0"
+                        Orientation="Horizontal">
+
+                <Label Name="PublicIP"
+                   FontSize="20"
+                   Content="Внешний IP:"
+                   RenderTransformOrigin="0,1" MouseRightButtonDown="PublicIP_MouseRightButtonDown"
+                   />
+                <UserControl:ErrorIcon x:Name="MappingErrorIcon"
+                                       Height="15" Width="15"
+                                       VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Left"
+                                       Visibility="Collapsed"
+                                       Description="Произошла ошибка при пробросе портов. К вам не смогут подключиться за пределами локальной сети"
+                                       ></UserControl:ErrorIcon>
+            </StackPanel>
+
+            <Label Content="Ваше имя:" 
+                   Canvas.Right="260"/>
+
+            <UserControl:EditedLabel x:Name="UserName"
+                                     Width="120"       Height="30"
+                                     Canvas.Right="233" Canvas.Top="25"
+                                     FontSize="18"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"></UserControl:EditedLabel>
+
+            <Border Canvas.Top="5" Canvas.Right="178"
+                    CornerRadius="5"
+                    Height="50" Width="50" ClipToBounds="True"
+                   >
+                <Image Name="ProfilePhoto"
+                   Cursor="Hand"
+                   ToolTip="Ваша фотография"
+MouseLeftButtonUp="ProfilePhoto_MouseLeftButtonUp"
+                   ></Image>
+            </Border>
+
+            <Button Name="SettingsButton"
+                    Canvas.Top="10" Canvas.Right="90"
+                    Height="45"
+                    Cursor="Hand"
+                    ToolTip="Параметры"
+                    Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Focusable="False" ForceCursor="True" Click="SettingsButton_Click"
+                    >
+                <Image Source="Images\Settings.png" Margin="5"></Image>
+            </Button>
+            <Button Name="AddNewConnection"
+                    Canvas.Top="10" Canvas.Right="40"
+                    Height="45"
+                    Cursor="Hand"
+                    Click="AddNewConnection_Click"
+                    ToolTip="Добавить соединение"
+                    Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Focusable="False" ForceCursor="True"
+                    >
+                <Image Source="Images\Plus.png" Margin="5"></Image>
+            </Button>
+
+            <Button Name="LogOpenButton"
+                    Canvas.Right="15"
+                    Canvas.Top="12"
+                    Height="15"
+                    ToolTip="Лог запросов"
+                    Cursor="Hand"
+                    Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Focusable="False" ForceCursor="True" Click="LogOpenButton_Click"
+                    >
+                <Image Source="Images\Log.png"></Image>
+            </Button>
+
+            <Button Name="SearchLocalComputers"
+                    Canvas.Right="15"
+                    Canvas.Bottom="10"
+                    Height="20"
+                    ToolTip="Поиск устройств в локальной сети"
+                    Cursor="Hand"
+                    Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Focusable="False" ForceCursor="True" Click="SearchLocalComputers_Click"
+                    >
+                <Image Source="Images\Search.png"></Image>
+            </Button>
+        </Canvas>
+        <Grid Grid.Row="1">
+
+            <UserControl:ChatControlTabs x:Name="ChatArea" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Image Name="GetStartedImage" Source="GetStarted.png" HorizontalAlignment="Right" VerticalAlignment="Top" SnapsToDevicePixels="False" Visibility="Collapsed" Margin="0,0,5,0" Width="700" Height="254"></Image>
+        </Grid>
+    </Grid>
+</Window>
